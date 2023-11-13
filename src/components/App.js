@@ -1,25 +1,23 @@
 import { Header } from "./Header.jsx";
 import { Sidebar } from "./Sidebar.jsx";
-import { Post } from './Post.jsx';
+import { Post } from "./Post.jsx";
 
 import "./global.css";
 
-import styles from './App.module.css'
+import styles from "./App.module.css";
 
 function App() {
   return (
     <div className="App">
       <Header />
 
-     <div className={styles.wrapper}>
-       <Sidebar />
+      <div className={styles.wrapper}>
+        <Sidebar />
         <main>
-          <Post 
-          author="marcela"
-          content="Lorem Ipsum"
-          />
+          <Post />
+          <Post />
         </main>
-     </div>
+      </div>
     </div>
   );
 }
