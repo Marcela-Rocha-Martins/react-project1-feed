@@ -1,3 +1,4 @@
+import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
 import styles from "./Post.module.css";
 
@@ -6,8 +7,7 @@ export function Post(props) {
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img
-            className={styles.avatar}
+          <Avatar
             src="https://media.licdn.com/dms/image/C4E03AQE2AmnSI0hM0Q/profile-displayphoto-shrink_800_800/0/1632096337874?e=1705536000&v=beta&t=59WfAAJyMzunXUg994zXDNoqd3CtWA7Zq6lqL059KQY"
           />
           <div className={styles.authorInfo}>
@@ -37,13 +37,12 @@ export function Post(props) {
       </div>
 
       <form className={styles.commentForm}>
-
         <strong>Give your feedback</strong>
 
         <textarea placeholder="Leave a comment here"></textarea>
-        
+
         <footer>
-        <button type="submit">Comment</button>
+          <button type="submit">Comment</button>
         </footer>
       </form>
 
