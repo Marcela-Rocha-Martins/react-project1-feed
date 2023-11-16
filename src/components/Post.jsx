@@ -4,18 +4,39 @@ import { Comment } from "./Comment";
 import styles from "./Post.module.css";
 import { format, formatDistanceToNow } from "date-fns";
 
-
 export function Post({ author, publishedAt, content }) {
   const publishedDateFormatted = format(publishedAt, "d LLLL 'at' HH:mm' h'");
   const publishedDateRelative = formatDistanceToNow(publishedAt, {
     addSuffix: true,
   });
-  const [comments, setComments] = useState([1, 2, 3]);
-
+  const [comments, setComments] = useState(["post muito bacana hein"]);
+  const [newCommentText, setNewCommentText] = useState("");
+  const isNewCommentEmpty = newCommentText.length === 0;
 
   function handleCreateNewComment() {
+    /* eslint-disable no-restricted-globals */
     event.preventDefault();
-    setComments([...comments, comments.length + 1]);
+
+    setComments([...comments, newCommentText]);
+    setNewCommentText("");
+  }
+
+  function handleNewCommentChange() {
+    event.target.setCustomValidity("");
+    setNewCommentText(event.target.value);
+  }
+
+  function deleteComment(commentToDelete) {
+    const commentsWithoutDeletedOne = comments.filter((comment) => {
+      return comment !== commentToDelete;
+    });
+
+    setComments(commentsWithoutDeletedOne);
+  }
+
+  function handleNewInvalidMessage() {
+    /* eslint-disable no-restricted-globals */
+    event.target.setCustomValidity("please, leave your comment first");
   }
 
   return (
@@ -39,10 +60,10 @@ export function Post({ author, publishedAt, content }) {
       <div className={styles.content}>
         {content.map((aContent) => {
           if (aContent.type === "paragraph") {
-            return <p>{aContent.content}</p>;
+            return <p key={aContent.content}>{aContent.content}</p>;
           } else if (aContent.type === "link") {
             return (
-              <p>
+              <p key={aContent.content}>
                 <a href="">{aContent.content}</a>
               </p>
             );
@@ -53,16 +74,29 @@ export function Post({ author, publishedAt, content }) {
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Give your feedback</strong>
 
-        <textarea placeholder="Leave a comment here"></textarea>
+        <textarea
+          name="comment"
+          placeholder="Leave a comment here"
+          value={newCommentText}
+          onChange={handleNewCommentChange}
+          onInvalid={handleNewInvalidMessage}
+          required
+        ></textarea>
 
         <footer>
-          <button type="submit">Comment</button>
+          <button type="submit" disabled={isNewCommentEmpty}>Comment</button>
         </footer>
       </form>
 
-      <div ClassName={styles.commentList}>
+      <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comment />;
+          return (
+            <Comment
+              key={comment}
+              content={comment}
+              onDeleteComment={deleteComment}
+            />
+          );
         })}
       </div>
     </article>
