@@ -4,16 +4,15 @@ import styles from "./Comment.module.css";
 import { Avatar } from "./Avatar";
 
 export function Comment({ content, onDeleteComment }) {
-  const [applauseCount, setApplauseCount] = useState(0);
+  const [applauseCount, setApplauseCount] = useState(2);
 
   function handleDeleteComment() {
     onDeleteComment(content);
   }
 
   function handleApplauseComment() {
-    setApplauseCount(applauseCount + 1)
+    setApplauseCount(applauseCount + 1);
   }
-
 
   return (
     <div className={styles.comment}>
